@@ -41,13 +41,9 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Actions */}
           <div className="hidden md:flex items-center space-x-5">
             <Link to="/signin" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
               Sign In
-            </Link>
-            <Link to="/contact" className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full text-sm font-medium hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-0.5 transition-all duration-300 active:scale-95">
-              Get Started
             </Link>
           </div>
 
@@ -88,9 +84,6 @@ export default function Navbar() {
               <div className="pt-4 mt-2 border-t border-border/50 flex flex-col space-y-3">
                 <Link to="/signin" onClick={() => setIsOpen(false)} className="w-full px-4 py-3 text-center text-sm font-medium border-2 border-border/80 rounded-xl text-foreground hover:bg-muted/50 transition-colors inline-block">
                   Sign In
-                </Link>
-                <Link to="/contact" onClick={() => setIsOpen(false)} className="w-full px-4 py-3 text-center text-sm font-medium bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 transition-colors shadow-md shadow-primary/20 inline-block">
-                  Get Started
                 </Link>
               </div>
             </div>
