@@ -1,9 +1,9 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { 
   Users, Building2, Stethoscope, FileText, Package, Briefcase, 
   CreditCard, Landmark, ArrowLeftRight, BarChart, Calendar,
-  Settings, ShieldAlert, Activity, MessageSquare, ChevronDown
+  Settings, ShieldAlert, Activity, MessageSquare, LogOut
 } from 'lucide-react';
 
 const menuGroups = [
@@ -41,6 +41,8 @@ const menuGroups = [
 ];
 
 export default function Sidebar({ isOpen, setIsOpen }) {
+  const navigate = useNavigate();
+
   if (!isOpen) return null;
 
   return (
@@ -100,9 +102,13 @@ export default function Sidebar({ isOpen, setIsOpen }) {
               <p className="text-[10px] text-teal-700 dark:text-teal-400 font-medium leading-tight">Super Admin</p>
             </div>
           </div>
-          <div className="w-7 h-7 rounded-full bg-gray-50 dark:bg-[#1a233a] border border-gray-200 dark:border-slate-700/50 flex items-center justify-center cursor-pointer shrink-0 transition-colors hover:bg-gray-100 dark:hover:bg-slate-700">
-            <ChevronDown className="w-3.5 h-3.5 text-gray-500 dark:text-slate-400" />
-          </div>
+          <button 
+            onClick={() => navigate('/signin')}
+            title="Logout"
+            className="w-7 h-7 rounded-full bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 flex items-center justify-center cursor-pointer shrink-0 transition-colors hover:bg-red-100 dark:hover:bg-red-500/20 group"
+          >
+            <LogOut className="w-3.5 h-3.5 text-red-500 dark:text-red-400 group-hover:scale-110 transition-transform" />
+          </button>
         </div>
       </div>
     </aside>
