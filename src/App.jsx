@@ -12,7 +12,11 @@ import './App.css'
 
 function App() {
   const location = useLocation();
-  const hideNavbar = location.pathname === '/signin';
+  const hideNavbar = location.pathname === '/signin' || 
+    location.pathname.startsWith('/super-admin') || 
+    location.pathname.startsWith('/sub-admin') || 
+    location.pathname.startsWith('/doctor') || 
+    location.pathname.startsWith('/lab');
 
   return (
     <div className="min-h-screen bg-background font-sans">
