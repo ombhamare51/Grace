@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Loader2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -25,8 +25,18 @@ const formSchema = z.object({
   }),
 });
 
+// Dummy credentials for testing
+const dummyUsers = {
+  'superadmin@grace.com': '/super-admin',
+  'subadmin@grace.com': '/sub-admin',
+  'doctor@grace.com': '/doctor',
+  'lab@grace.com': '/lab',
+};
+
 export default function SignIn() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loginError, setLoginError] = useState('');
+  const navigate = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -38,11 +48,21 @@ export default function SignIn() {
 
   async function onSubmit(values) {
     setIsSubmitting(true);
+    setLoginError('');
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      console.log('Sign in values:', values);
+      // Simulate network request
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      const route = dummyUsers[values.email];
+      if (route && values.password === 'password123') {
+        console.log('Login successful:', values);
+        navigate(route);
+      } else {
+        setLoginError('Invalid email or password. Please try again.');
+      }
     } catch (error) {
       console.error('Sign in error:', error);
+      setLoginError('An error occurred during sign in.');
     } finally {
       setIsSubmitting(false);
     }
@@ -87,7 +107,7 @@ export default function SignIn() {
                     <FormLabel className="text-gray-900 font-semibold text-sm">Email Address</FormLabel>
                     <FormControl>
                       <Input 
-                        placeholder="batuhankra312@gmail.com" 
+                        placeholder="doctor@grace.com" 
                         type="email" 
                         {...field} 
                         className="bg-white/90 border-white/80 rounded-xl h-12 focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:border-transparent transition-all shadow-sm text-gray-900 px-4" 
@@ -116,6 +136,12 @@ export default function SignIn() {
                   </FormItem>
                 )}
               />
+
+              {loginError && (
+                <div className="text-sm font-medium text-red-500 text-center">
+                  {loginError}
+                </div>
+              )}
 
               <div className="flex items-center justify-between pt-2">
                 <label className="flex items-center gap-2.5 cursor-pointer group">
@@ -151,6 +177,17 @@ export default function SignIn() {
               </Button>
             </form>
           </Form>
+        </div>
+
+        {/* Dummy Data Hint */}
+        <div className="mt-8 p-4 bg-white/40 backdrop-blur-md rounded-xl border border-white/50 shadow-sm w-full max-w-[440px]">
+          <h3 className="text-sm font-bold text-gray-800 mb-2">Test Accounts (Password: password123)</h3>
+          <ul className="text-sm text-gray-700 space-y-1">
+            <li><span className="font-semibold text-purple-700">superadmin@grace.com</span> → Super Admin</li>
+            <li><span className="font-semibold text-purple-700">subadmin@grace.com</span> → Sub Admin</li>
+            <li><span className="font-semibold text-purple-700">doctor@grace.com</span> → Doctor Portal</li>
+            <li><span className="font-semibold text-purple-700">lab@grace.com</span> → Lab Portal</li>
+          </ul>
         </div>
       </div>
     </div>
